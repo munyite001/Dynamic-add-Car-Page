@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
 import data from "../all-vehicles-model.json";
+import ImageUploadSection from "@/components/imageUploadSection";
 
 interface Vehicle {
     id: number;
@@ -76,6 +77,7 @@ const App: React.FC = () => {
         horsepower: string;
         fuelType: string;
         features: string[];
+        vehicleImages: string[];
         category: string;
         price: string;
         description: string;
@@ -90,6 +92,7 @@ const App: React.FC = () => {
         fuelType: "",
         category: "",
         features: [],
+        vehicleImages: [],
         price: "",
         description: ""
     });
@@ -234,8 +237,11 @@ const App: React.FC = () => {
                     </CardHeader>
                     <CardContent className="p-6">
                         <div className="space-y-8">
-                            {/* Basic Information Section */}
                             <div className="space-y-6">
+                                {/* Vehicle Images */}
+                                <ImageUploadSection />
+
+                                {/* Basic Information Section */}
                                 <h3 className="text-lg font-medium text-gray-900 border-b pb-2">
                                     Basic Information
                                 </h3>
