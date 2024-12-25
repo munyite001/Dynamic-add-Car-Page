@@ -76,6 +76,7 @@ const App: React.FC = () => {
         horsepower: string;
         fuelType: string;
         features: string[];
+        category: string;
         price: string;
         description: string;
     }>({
@@ -87,6 +88,7 @@ const App: React.FC = () => {
         engineSize: "",
         horsepower: "",
         fuelType: "",
+        category: "",
         features: [],
         price: "",
         description: ""
@@ -107,77 +109,106 @@ const App: React.FC = () => {
     };
 
     const handleValidateForm = (formData: FormData) => {
-      const {
-        make,
-        model,
-        year,
-        color,
-        transmission,
-        engineSize,
-        horsepower,
-        fuelType,
-        features,
-        price,
-        description
-      } = formData;
-      if (
-        make === "" ||
-        model === "" ||
-        year === "" ||
-        color === "" ||
-        transmission === "" ||
-        engineSize === "" ||
-        horsepower === "" ||
-        fuelType === "" ||
-        features.length === 0 ||
-        price === "" ||
-        description === ""
-      ) {
-        alert("Please fill in all required fields");
-      } else {
-        setShowModal(true);
-      }
-    }
+        const {
+            make,
+            model,
+            year,
+            color,
+            transmission,
+            engineSize,
+            horsepower,
+            fuelType,
+            features,
+            price,
+            description
+        } = formData;
+        if (
+            make === "" ||
+            model === "" ||
+            year === "" ||
+            color === "" ||
+            transmission === "" ||
+            engineSize === "" ||
+            horsepower === "" ||
+            fuelType === "" ||
+            features.length === 0 ||
+            price === "" ||
+            description === ""
+        ) {
+            alert("Please fill in all required fields");
+        } else {
+            setShowModal(true);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
-          {showModal && (
-            <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
-              <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
-                <h2 className="text-2xl font-semibold text-gray-900 mb-4">Vehicle Details</h2>
-                <div className="space-y-2">
-                  <p><strong>Make:</strong> {formData.make}</p>
-                  <p><strong>Model:</strong> {formData.model}</p>
-                  <p><strong>Year:</strong> {formData.year}</p>
-                  <p><strong>Color:</strong> {formData.color}</p>
-                  <p><strong>Transmission:</strong> {formData.transmission}</p>
-                  <p><strong>Engine Size:</strong> {formData.engineSize}</p>
-                  <p><strong>Horsepower:</strong> {formData.horsepower}</p>
-                  <p><strong>Fuel Type:</strong> {formData.fuelType}</p>
-                  <p><strong>Features:</strong> {formData.features.join(", ")}</p>
-                  <p><strong>Price:</strong> {formData.price} KSH</p>
-                  <p><strong>Description:</strong> {formData.description}</p>
+            {showModal && (
+                <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
+                    <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-lg">
+                        <h2 className="text-2xl font-semibold text-gray-900 mb-4">
+                            Vehicle Details
+                        </h2>
+                        <div className="space-y-2">
+                            <p>
+                                <strong>Make:</strong> {formData.make}
+                            </p>
+                            <p>
+                                <strong>Model:</strong> {formData.model}
+                            </p>
+                            <p>
+                                <strong>Year:</strong> {formData.year}
+                            </p>
+                            <p>
+                                <strong>Color:</strong> {formData.color}
+                            </p>
+                            <p>
+                                <strong>Transmission:</strong>{" "}
+                                {formData.transmission}
+                            </p>
+                            <p>
+                                <strong>Engine Size:</strong>{" "}
+                                {formData.engineSize}
+                            </p>
+                            <p>
+                                <strong>Horsepower:</strong>{" "}
+                                {formData.horsepower}
+                            </p>
+                            <p>
+                                <strong>Fuel Type:</strong> {formData.fuelType}
+                            </p>
+                            <p>
+                                <strong>Features:</strong>{" "}
+                                {formData.features.join(", ")}
+                            </p>
+                            <p>
+                                <strong>Price:</strong> {formData.price} KSH
+                            </p>
+                            <p>
+                                <strong>Description:</strong>{" "}
+                                {formData.description}
+                            </p>
+                        </div>
+                        <div className="mt-6 flex justify-end space-x-4">
+                            <button
+                                className="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
+                                onClick={() => setShowModal(false)}
+                            >
+                                Close
+                            </button>
+                            <button
+                                className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
+                                onClick={() => {
+                                    handleValidateForm(formData);
+                                    setShowModal(false);
+                                }}
+                            >
+                                Confirm
+                            </button>
+                        </div>
+                    </div>
                 </div>
-                <div className="mt-6 flex justify-end space-x-4">
-                  <button
-                    className="bg-gray-300 text-gray-700 py-2 px-4 rounded-lg hover:bg-gray-400 transition-colors"
-                    onClick={() => setShowModal(false)}
-                  >
-                    Close
-                  </button>
-                  <button
-                    className="bg-blue-600 text-white py-2 px-4 rounded-lg hover:bg-blue-700 transition-colors"
-                    onClick={() => {
-                      handleValidateForm(formData);
-                      setShowModal(false);
-                    }}
-                  >
-                    Confirm
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+            )}
             <div className="max-w-4xl mx-auto px-4 py-12">
                 <div className="text-center mb-12">
                     <h1 className="text-3xl font-bold text-gray-900 mb-4">
@@ -253,7 +284,8 @@ const App: React.FC = () => {
                                                 onChange={(event) => {
                                                     setFormData({
                                                         ...formData,
-                                                        model: event.target.value
+                                                        model: event.target
+                                                            .value
                                                     });
                                                 }}
                                             >
@@ -264,16 +296,16 @@ const App: React.FC = () => {
                                                 >
                                                     Select Model
                                                 </option>
-                                                {filteredModels.map(
-                                                    (model, index) => (
+                                                {filteredModels
+                                                    .map((model, index) => (
                                                         <option
                                                             key={index}
                                                             value={model}
                                                         >
                                                             {model}
                                                         </option>
-                                                    )
-                                                )}
+                                                    ))
+                                                    .sort()}
                                             </select>
                                         </div>
                                     )}
@@ -297,7 +329,8 @@ const App: React.FC = () => {
                                                     onChange={(event) => {
                                                         setFormData({
                                                             ...formData,
-                                                            year: event.target.value
+                                                            year: event.target
+                                                                .value
                                                         });
                                                     }}
                                                 >
@@ -352,7 +385,8 @@ const App: React.FC = () => {
                                                     onChange={(event) => {
                                                         setFormData({
                                                             ...formData,
-                                                            color: event.target.value
+                                                            color: event.target
+                                                                .value
                                                         });
                                                     }}
                                                 >
@@ -396,11 +430,15 @@ const App: React.FC = () => {
                                                     name="transmission"
                                                     id="transmission"
                                                     className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
-                                                    value={formData.transmission}
+                                                    value={
+                                                        formData.transmission
+                                                    }
                                                     onChange={(event) => {
                                                         setFormData({
                                                             ...formData,
-                                                            transmission: event.target.value
+                                                            transmission:
+                                                                event.target
+                                                                    .value
                                                         });
                                                     }}
                                                 >
@@ -450,7 +488,9 @@ const App: React.FC = () => {
                                                     onChange={(event) => {
                                                         setFormData({
                                                             ...formData,
-                                                            engineSize: event.target.value
+                                                            engineSize:
+                                                                event.target
+                                                                    .value
                                                         });
                                                     }}
                                                 >
@@ -501,7 +541,9 @@ const App: React.FC = () => {
                                                     onChange={(event) => {
                                                         setFormData({
                                                             ...formData,
-                                                            horsepower: event.target.value
+                                                            horsepower:
+                                                                event.target
+                                                                    .value
                                                         });
                                                     }}
                                                 >
@@ -548,7 +590,9 @@ const App: React.FC = () => {
                                                     onChange={(event) => {
                                                         setFormData({
                                                             ...formData,
-                                                            fuelType: event.target.value
+                                                            fuelType:
+                                                                event.target
+                                                                    .value
                                                         });
                                                     }}
                                                 >
@@ -581,63 +625,128 @@ const App: React.FC = () => {
 
                                         {/* Features Section */}
                                         <div className="space-y-4 mt-8">
-                                          <h3 className="text-lg font-medium text-gray-900 border-b pb-2">
-                                            Vehicle Features
-                                          </h3>
-                                          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                                            {[
-                                              "Air Conditioning",
-                                              "Heated Seats",
-                                              "Sunroof",
-                                              "Bluetooth",
-                                              "Backup Camera",
-                                              "Cruise Control",
-                                              "Navigation System",
-                                              "Remote Start",
-                                              "Blind Spot Monitoring",
-                                              "Parking Sensors",
-                                              "Leather Seats",
-                                              "Alloy Wheels",
-                                              "Keyless Entry",
-                                              "Power Windows",
-                                              "Power Steering",
-                                              "Anti-lock Braking System (ABS)",
-                                              "Traction Control",
-                                              "Fog Lights",
-                                              "Tow Package",
-                                              "Roof Rack"
-                                            ].map((feature, index) => (
-                                              <div
-                                                key={index}
-                                                className="flex items-center space-x-3"
-                                              >
-                                                <input
-                                                  type="checkbox"
-                                                  id={`feature-${index}`}
-                                                  name="features"
-                                                  value={feature}
-                                                  className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
-                                                  onChange={() => {
-                                                    const selectedFeatures = formData.features.includes(feature)
-                                                      ? formData.features.filter(f => f !== feature)
-                                                      : [...formData.features, feature];
-                                                    setFormData({
-                                                      ...formData,
-                                                      features: selectedFeatures
-                                                    });
-                                                  }}
-                                                />
-                                                <label
-                                                  htmlFor={`feature-${index}`}
-                                                  className="text-sm text-gray-700"
-                                                >
-                                                  {feature}
-                                                </label>
-                                              </div>
-                                            ))}
-                                          </div>
+                                            <h3 className="text-lg font-medium text-gray-900 border-b pb-2">
+                                                Vehicle Features
+                                            </h3>
+                                            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+                                                {[
+                                                    "Air Conditioning",
+                                                    "Heated Seats",
+                                                    "Sunroof",
+                                                    "Bluetooth",
+                                                    "Backup Camera",
+                                                    "Cruise Control",
+                                                    "Navigation System",
+                                                    "Remote Start",
+                                                    "Blind Spot Monitoring",
+                                                    "Parking Sensors",
+                                                    "Leather Seats",
+                                                    "Alloy Wheels",
+                                                    "Keyless Entry",
+                                                    "Power Windows",
+                                                    "Power Steering",
+                                                    "Anti-lock Braking System (ABS)",
+                                                    "Traction Control",
+                                                    "Fog Lights",
+                                                    "Tow Package",
+                                                    "Roof Rack"
+                                                ].map((feature, index) => (
+                                                    <div
+                                                        key={index}
+                                                        className="flex items-center space-x-3"
+                                                    >
+                                                        <input
+                                                            type="checkbox"
+                                                            id={`feature-${index}`}
+                                                            name="features"
+                                                            value={feature}
+                                                            className="w-4 h-4 text-blue-600 rounded focus:ring-blue-500"
+                                                            onChange={() => {
+                                                                const selectedFeatures =
+                                                                    formData.features.includes(
+                                                                        feature
+                                                                    )
+                                                                        ? formData.features.filter(
+                                                                              (
+                                                                                  f
+                                                                              ) =>
+                                                                                  f !==
+                                                                                  feature
+                                                                          )
+                                                                        : [
+                                                                              ...formData.features,
+                                                                              feature
+                                                                          ];
+                                                                setFormData({
+                                                                    ...formData,
+                                                                    features:
+                                                                        selectedFeatures
+                                                                });
+                                                            }}
+                                                        />
+                                                        <label
+                                                            htmlFor={`feature-${index}`}
+                                                            className="text-sm text-gray-700"
+                                                        >
+                                                            {feature}
+                                                        </label>
+                                                    </div>
+                                                ))}
+                                            </div>
                                         </div>
-
+                                        {/* Categories section */}
+                                        <div className="space-y-4 mt-8">
+                                            <h3 className="text-lg font-medium text-gray-900 border-b pb-2">
+                                                Categories
+                                            </h3>
+                                            <div className="space-y-2">
+                                                <label
+                                                    htmlFor="category"
+                                                    className="text-sm font-medium text-gray-700"
+                                                >
+                                                    Category *
+                                                </label>
+                                                <select
+                                                    name="category"
+                                                    id="category"
+                                                    className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                                                    value={formData.category}
+                                                    onChange={(event) => {
+                                                        setFormData({
+                                                            ...formData,
+                                                            category:
+                                                                event.target
+                                                                    .value
+                                                        });
+                                                    }}
+                                                >
+                                                    <option value="" disabled>
+                                                        Select Category
+                                                    </option>
+                                                    {[
+                                                        "Sport",
+                                                        "Heavy Duty",
+                                                        "Luxury",
+                                                        "Economy",
+                                                        "SUV",
+                                                        "Truck",
+                                                        "Van",
+                                                        "Convertible",
+                                                        "Coupe",
+                                                        "Hatchback",
+                                                        "Sedan",
+                                                        "Wagon"
+                                                    ].map((category, index) => (
+                                                        <option
+                                                            key={index}
+                                                            value={category}
+                                                        >
+                                                            {category}
+                                                        </option>
+                                                    ))}
+                                                </select>
+                                            </div>
+                                        </div>
                                         {/* Pricing Section */}
                                         <div className="space-y-4 mt-8">
                                             <h3 className="text-lg font-medium text-gray-900 border-b pb-2">
@@ -661,7 +770,9 @@ const App: React.FC = () => {
                                                         onChange={(event) => {
                                                             setFormData({
                                                                 ...formData,
-                                                                price: event.target.value
+                                                                price: event
+                                                                    .target
+                                                                    .value
                                                             });
                                                         }}
                                                     />
@@ -694,7 +805,9 @@ const App: React.FC = () => {
                                                     onChange={(event) => {
                                                         setFormData({
                                                             ...formData,
-                                                            description: event.target.value
+                                                            description:
+                                                                event.target
+                                                                    .value
                                                         });
                                                     }}
                                                 ></textarea>
@@ -707,7 +820,9 @@ const App: React.FC = () => {
                                                 type="submit"
                                                 className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg hover:bg-blue-700 transition-colors duration-200 font-medium"
                                                 onClick={() => {
-                                                  handleValidateForm(formData);
+                                                    handleValidateForm(
+                                                        formData
+                                                    );
                                                 }}
                                             >
                                                 List Vehicle
