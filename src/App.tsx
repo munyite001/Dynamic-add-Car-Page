@@ -1,15 +1,11 @@
 import React, { useState } from "react";
 import { Card, CardHeader, CardContent } from "@/components/ui/card";
-import data from "../all-vehicles-model.json";
+import data from "../unique-makes-and-models.json";
 import ImageUploadSection from "@/components/imageUploadSection";
 
 interface Vehicle {
-    id: number;
     make: string;
-    model: string;
-    year: number;
-    color: string;
-    transmission: string;
+    models: string[];
 }
 
 const makesUsedInKenya = [
@@ -33,14 +29,13 @@ const makesUsedInKenya = [
     "Chevrolet"
 ];
 
-const dataTyped: Vehicle[] = data as Vehicle[];
-
+const dataTyped = data as unknown as Vehicle[];
 const App: React.FC = () => {
-    const uniqueMakes = Array.from(
-        new Set(dataTyped.map((vehicle) => vehicle.make))
+    const vehicleMakes = Array.from(
+        dataTyped.map((vehicle) => vehicle.make)
     ).sort();
 
-    const makesInKenya = uniqueMakes.filter((make) =>
+    const makesInKenya = vehicleMakes.filter((make) =>
         makesUsedInKenya.includes(make)
     );
 
@@ -57,15 +52,13 @@ const App: React.FC = () => {
             ...formData,
             make: selected
         });
-        const models = Array.from(
-            new Set(
-                dataTyped
-                    .filter((vehicle) => vehicle.make === selected)
-                    .map((vehicle) => vehicle.model)
-            )
-        );
-        setFilteredModels(models);
+        setFilteredModels(() => {
+            return dataTyped.filter((vehicle) => vehicle.make === selected)[0].models;
+
+        })
     };
+
+    console.log("Seleced Make: ", selectedMake);
 
     const [formData, setFormData] = useState<{
         make: string;
@@ -263,7 +256,7 @@ const App: React.FC = () => {
                                             <option value="" disabled>
                                                 Select Make
                                             </option>
-                                            {uniqueMakes.map((make, index) => (
+                                            {vehicleMakes.map((make, index) => (
                                                 <option
                                                     key={index}
                                                     value={make}
@@ -347,32 +340,11 @@ const App: React.FC = () => {
                                                     >
                                                         Select Year
                                                     </option>
-                                                    {Array.from(
-                                                        new Set(
-                                                            dataTyped
-                                                                .filter(
-                                                                    (vehicle) =>
-                                                                        vehicle.make ===
-                                                                            selectedMake &&
-                                                                        filteredModels.includes(
-                                                                            vehicle.model
-                                                                        )
-                                                                )
-                                                                .map(
-                                                                    (vehicle) =>
-                                                                        vehicle.year
-                                                                )
-                                                        )
-                                                    )
-                                                        .sort((a, b) => b - a)
-                                                        .map((year, index) => (
-                                                            <option
-                                                                key={index}
-                                                                value={year}
-                                                            >
-                                                                {year}
-                                                            </option>
-                                                        ))}
+                                                {Array.from({ length: 2024 - 2000 + 1 }, (_, i) => 2000 + i).map((year, index) => (
+                                                    <option key={index} value={year}>
+                                                        {year}
+                                                    </option>
+                                                ))}
                                                 </select>
                                             </div>
 
