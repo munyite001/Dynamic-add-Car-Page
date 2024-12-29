@@ -61,6 +61,7 @@ const App: React.FC = () => {
     console.log("Seleced Make: ", selectedMake);
 
     const [formData, setFormData] = useState<{
+        numberplate: string;
         make: string;
         model: string;
         year: string;
@@ -71,10 +72,12 @@ const App: React.FC = () => {
         fuelType: string;
         features: string[];
         vehicleImages: string[];
+        seatCapacity: string;
         category: string;
         price: string;
         description: string;
     }>({
+        numberplate: "",
         make: "",
         model: "",
         year: "",
@@ -86,6 +89,7 @@ const App: React.FC = () => {
         category: "",
         features: [],
         vehicleImages: [],
+        seatCapacity: "",
         price: "",
         description: ""
     });
@@ -147,6 +151,9 @@ const App: React.FC = () => {
                         </h2>
                         <div className="space-y-2">
                             <p>
+                                <strong>LicensePlate Number:</strong> {formData.numberplate}
+                            </p>
+                            <p>
                                 <strong>Make:</strong> {formData.make}
                             </p>
                             <p>
@@ -157,6 +164,9 @@ const App: React.FC = () => {
                             </p>
                             <p>
                                 <strong>Color:</strong> {formData.color}
+                            </p>
+                            <p>
+                                <strong>Seat Capacity:</strong> {formData.seatCapacity}
                             </p>
                             <p>
                                 <strong>Transmission:</strong>{" "}
@@ -238,6 +248,28 @@ const App: React.FC = () => {
                                 <h3 className="text-lg font-medium text-gray-900 border-b pb-2">
                                     Basic Information
                                 </h3>
+                                <div className="space-y-2">
+                                    <label
+                                        htmlFor="numberplate"
+                                        className="text-sm font-medium text-gray-700"
+                                    >
+                                        Licence Plate Number *
+                                    </label>
+                                    <input
+                                        type="text"
+                                        name="numberplate"
+                                        id="numberplate"
+                                        className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                                        placeholder="Enter licence plate number"
+                                        value={formData.numberplate}
+                                        onChange={(event) => {
+                                            setFormData({
+                                                ...formData,
+                                                numberplate: event.target.value
+                                            });
+                                        }}
+                                    />
+                                </div>
                                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                                     <div className="space-y-2">
                                         <label
@@ -308,6 +340,37 @@ const App: React.FC = () => {
                                             </select>
                                         </div>
                                     )}
+                                </div>
+                                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                    <div className="space-y-2">
+                                        <label
+                                            htmlFor="seatCapacity"
+                                            className="text-sm font-medium text-gray-700"
+                                        >
+                                            Seat Capacity *
+                                        </label>
+                                        <select
+                                            name="seatCapacity"
+                                            id="seatCapacity"
+                                            className="w-full p-3 border border-gray-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                                            value={formData.seatCapacity}
+                                            onChange={(event) => {
+                                                setFormData({
+                                                    ...formData,
+                                                    seatCapacity: event.target.value
+                                                });
+                                            }}
+                                        >
+                                            <option value="" disabled>
+                                                Select Seat Capacity
+                                            </option>
+                                            {["2", "4", "5", "7", "8", "9", "12", "15"].map((capacity, index) => (
+                                                <option key={index} value={capacity}>
+                                                    {capacity}
+                                                </option>
+                                            ))}
+                                        </select>
+                                    </div>
                                 </div>
 
                                 {selectedMake && filteredModels.length > 0 && (
