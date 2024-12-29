@@ -95,10 +95,12 @@ const App: React.FC = () => {
     });
 
     type FormData = {
+        numberplate: string;
         make: string;
         model: string;
         year: string;
         color: string;
+        seatCapacity: string;
         transmission: string;
         engineSize: string;
         horsepower: string;
@@ -110,10 +112,12 @@ const App: React.FC = () => {
 
     const handleValidateForm = (formData: FormData) => {
         const {
+            numberplate,
             make,
             model,
             year,
             color,
+            seatCapacity,
             transmission,
             engineSize,
             horsepower,
@@ -123,10 +127,12 @@ const App: React.FC = () => {
             description
         } = formData;
         if (
+            numberplate === "" ||
             make === "" ||
             model === "" ||
             year === "" ||
             color === "" ||
+            seatCapacity === "" ||
             transmission === "" ||
             engineSize === "" ||
             horsepower === "" ||
